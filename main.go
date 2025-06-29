@@ -1,6 +1,7 @@
 package main
 
 import (
+	"echotonic/controllers"
 	"echotonic/middlewares"
 	"echotonic/routes"
 	"echotonic/spec"
@@ -23,7 +24,11 @@ func main() {
 		},
 	}
 
-	routes.RegisterRoutes(e, openapi)
+	router := routes.NewRouter(e, openapi)
+	for _, ctr := range controllers.GetControllers() {
+		ctr.RegisterRoutes(router)
+	}
+
 	spec.ExposeSwaggerUI(e, openapi)
 
 	if err := e.Start(":3000"); err != nil && err != http.ErrServerClosed {
