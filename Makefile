@@ -6,7 +6,7 @@ GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
 BINARY_NAME=echotonic
-MAIN_PATH=./main.go
+MAIN_PATH=.
 
 # Show help
 .PHONY: help
