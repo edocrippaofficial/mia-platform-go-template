@@ -1,7 +1,7 @@
 package users
 
 import (
-	"echotonic/routes"
+	"echotonic/router"
 
 	"github.com/TickLabVN/tonic/core/docs"
 )
@@ -14,8 +14,8 @@ func NewUserController() *UserController {
 
 var tags = []string{"users"}
 
-func (c *UserController) RegisterRoutes(r *routes.Router) {
-	routes.RegisterRoute[GetByIDRequest, GetByIDResponse](r,
+func (c *UserController) RegisterRoutes(r *router.Router) {
+	router.RegisterRoute[GetByIDRequest, GetByIDResponse](r,
 		"GET", "/users/:id",
 		GetByIDHandler,
 		docs.OperationObject{OperationId: "get-user-by-id", Tags: tags, Summary: "Get user by ID"},

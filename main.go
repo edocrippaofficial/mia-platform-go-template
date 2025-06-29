@@ -3,7 +3,7 @@ package main
 import (
 	"echotonic/controllers"
 	"echotonic/middlewares"
-	"echotonic/routes"
+	"echotonic/router"
 	"echotonic/spec"
 	"log"
 	"net/http"
@@ -16,6 +16,7 @@ func main() {
 	e := echo.New()
 	e.HideBanner = true
 	e.Validator = middlewares.NewValidator()
+
 	openapi := &docs.OpenApi{
 		OpenAPI: "3.0.1",
 		Info: docs.InfoObject{
@@ -24,7 +25,7 @@ func main() {
 		},
 	}
 
-	router := routes.NewRouter(e, openapi)
+	router := router.NewRouter(e, openapi)
 	for _, ctr := range controllers.GetControllers() {
 		ctr.RegisterRoutes(router)
 	}

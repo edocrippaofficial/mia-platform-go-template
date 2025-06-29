@@ -3,11 +3,11 @@ package controllers
 import (
 	"echotonic/controllers/users"
 
-	"echotonic/routes"
+	"echotonic/router"
 )
 
 type Controller interface {
-	RegisterRoutes(r *routes.Router)
+	RegisterRoutes(r *router.Router)
 }
 
 func GetControllers() []Controller {
