@@ -18,17 +18,19 @@ type GetByIDResponse struct {
 	Email string `json:"email" validate:"required,email"`
 }
 
-func GetByIDHandler(c echo.Context) error {
+func (ctrl *UserController) GetByIDHandler(c echo.Context) error {
 	data := c.Get("data").(GetByIDRequest)
 
-	name := "John Doe"
-	if data.Name != "" {
-		name = data.Name
+	user, err := ctrl.userService.GetByID(data.ID, data.Name)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, map[string]string{
+			"error": err.Error(),
+		})
 	}
 
 	return c.JSON(http.StatusOK, GetByIDResponse{
-		ID:    data.ID,
-		Name:  name,
-		Email: "john.doe@example.com",
+		ID:    user.ID,
+		Name:  user.Name,
+		Email: user.Email,
 	})
 }

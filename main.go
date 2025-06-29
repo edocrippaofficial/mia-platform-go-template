@@ -4,6 +4,7 @@ import (
 	"echotonic/controllers"
 	"echotonic/middlewares"
 	"echotonic/router"
+	"echotonic/services"
 	"echotonic/spec"
 	"log"
 	"net/http"
@@ -26,7 +27,8 @@ func main() {
 	}
 
 	router := router.NewRouter(e, openapi)
-	for _, ctr := range controllers.GetControllers() {
+	svcs := services.NewServices()
+	for _, ctr := range controllers.NewControllers(svcs) {
 		ctr.RegisterRoutes(router)
 	}
 

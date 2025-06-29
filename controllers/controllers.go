@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"echotonic/controllers/users"
+	"echotonic/services"
 
 	"echotonic/router"
 )
@@ -10,8 +11,8 @@ type Controller interface {
 	RegisterRoutes(r *router.Router)
 }
 
-func GetControllers() []Controller {
+func NewControllers(svcs *services.Services) []Controller {
 	return []Controller{
-		users.NewUserController(),
+		users.NewUserController(svcs),
 	}
 }
