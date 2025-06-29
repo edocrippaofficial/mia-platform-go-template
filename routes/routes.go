@@ -2,8 +2,6 @@ package routes
 
 import (
 	"echotonic/middlewares"
-	getuser "echotonic/routes/get_user"
-	"net/http"
 
 	echoSwagger "github.com/TickLabVN/tonic/adapters/echo"
 	"github.com/TickLabVN/tonic/core/docs"
@@ -22,12 +20,24 @@ func NewRouter(e *echo.Echo, openapi *docs.OpenApi) *Router {
 	}
 }
 
-func (r *Router) RegisterRoutes() {
-	addRoute[getuser.Request, getuser.Response](r, http.MethodGet, "/users/:id", getuser.Handler, docs.OperationObject{OperationId: "getUserByID"})
-
+type HandlerWithTypes[Req any, Res any] struct {
+	Handler echo.HandlerFunc
+	Method  string
+	Path    string
+	Options []docs.OperationObject
 }
 
-func addRoute[D any, R any](r *Router, method string, path string, handler echo.HandlerFunc, opts ...docs.OperationObject) {
-	route := r.Echo.Add(method, path, handler, middlewares.Bind[D])
-	echoSwagger.AddRoute[D, R](r.OpenAPI, route, opts...)
+func RegisterRoute[Req any, Res any](r *Router, method string, path string, handler echo.HandlerFunc, opts ...docs.OperationObject) {
+	h := HandlerWithTypes[Req, Res]{
+		Handler: handler,
+		Method:  method,
+		Path:    path,
+		Options: opts,
+	}
+	h.addRoute(r)
+}
+
+func (h *HandlerWithTypes[Req, Res]) addRoute(r *Router) {
+	route := r.Echo.Add(h.Method, h.Path, h.Handler, middlewares.Bind[Req])
+	echoSwagger.AddRoute[Req, Res](r.OpenAPI, route, h.Options...)
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"echotonic/middlewares"
 	"echotonic/routes"
+	getuser "echotonic/routes/get_user"
 	"echotonic/spec"
 
 	"github.com/TickLabVN/tonic/core/docs"
@@ -22,7 +23,13 @@ func main() {
 	}
 
 	router := routes.NewRouter(e, openapi)
-	router.RegisterRoutes()
+	routes.RegisterRoute[getuser.Request, getuser.Response](
+		router,
+		"GET",
+		"/users/:id",
+		getuser.Handler,
+		docs.OperationObject{OperationId: "getUserByID"},
+	)
 
 	spec.ExposeOpenAPI(e, openapi)
 
