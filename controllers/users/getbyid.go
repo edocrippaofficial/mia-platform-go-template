@@ -1,4 +1,4 @@
-package getuser
+package users
 
 import (
 	"net/http"
@@ -6,23 +6,29 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type Request struct {
+type GetByIDRequest struct {
 	ID     string `param:"id" validate:"required"`
 	Name   string `query:"name"`
 	ApiKey string `header:"x-api-key" validate:"required"`
 }
 
-type Response struct {
+type GetByIDResponse struct {
 	ID    string `json:"id" validate:"required"`
 	Name  string `json:"name" validate:"required"`
 	Email string `json:"email" validate:"required,email"`
 }
 
-func Handler(c echo.Context) error {
-	data := c.Get("data").(Request)
-	return c.JSON(http.StatusOK, Response{
+func GetByIDHandler(c echo.Context) error {
+	data := c.Get("data").(GetByIDRequest)
+
+	name := "John Doe"
+	if data.Name != "" {
+		name = data.Name
+	}
+
+	return c.JSON(http.StatusOK, GetByIDResponse{
 		ID:    data.ID,
-		Name:  "John Doe",
+		Name:  name,
 		Email: "john.doe@example.com",
 	})
 }

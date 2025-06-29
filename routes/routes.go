@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"echotonic/controllers/users"
 	"echotonic/middlewares"
 
 	echoSwagger "github.com/TickLabVN/tonic/adapters/echo"
@@ -20,24 +21,17 @@ func NewRouter(e *echo.Echo, openapi *docs.OpenApi) *Router {
 	}
 }
 
-type HandlerWithTypes[Req any, Res any] struct {
-	Handler echo.HandlerFunc
-	Method  string
-	Path    string
-	Options []docs.OperationObject
+func RegisterRoutes(e *echo.Echo, openapi *docs.OpenApi) {
+	r := NewRouter(e, openapi)
+
+	registerRoute[users.GetByIDRequest, users.GetByIDResponse](r,
+		"GET", "/users/:id",
+		users.GetByIDHandler,
+		docs.OperationObject{OperationId: "get-user-by-id", Tags: []string{"users"}, Summary: "Get user by ID"},
+	)
 }
 
-func RegisterRoute[Req any, Res any](r *Router, method string, path string, handler echo.HandlerFunc, opts ...docs.OperationObject) {
-	h := HandlerWithTypes[Req, Res]{
-		Handler: handler,
-		Method:  method,
-		Path:    path,
-		Options: opts,
-	}
-	h.addRoute(r)
-}
-
-func (h *HandlerWithTypes[Req, Res]) addRoute(r *Router) {
-	route := r.Echo.Add(h.Method, h.Path, h.Handler, middlewares.Bind[Req])
-	echoSwagger.AddRoute[Req, Res](r.OpenAPI, route, h.Options...)
+func registerRoute[Req any, Res any](r *Router, method string, path string, handler echo.HandlerFunc, opts ...docs.OperationObject) {
+	route := r.Echo.Add(method, path, handler, middlewares.Bind[Req])
+	echoSwagger.AddRoute[Req, Res](r.OpenAPI, route, opts...)
 }

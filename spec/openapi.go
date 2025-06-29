@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func ExposeOpenAPI(e *echo.Echo, openapi *docs.OpenApi) {
+func ExposeSwaggerUI(e *echo.Echo, openapi *docs.OpenApi) {
 	path := "/documentation"
 	openAPIPath := fmt.Sprintf("%s.json", path)
 
@@ -17,10 +17,10 @@ func ExposeOpenAPI(e *echo.Echo, openapi *docs.OpenApi) {
 
 	// Swagger UI
 	e.GET(path, func(c echo.Context) error { return c.Redirect(http.StatusMovedPermanently, "/documentation/") })
-	e.GET(fmt.Sprintf("%s/*", path), func(c echo.Context) error { return c.HTML(http.StatusOK, swaggerUI(openAPIPath, "OpenAPI")) })
+	e.GET(fmt.Sprintf("%s/*", path), func(c echo.Context) error { return c.HTML(http.StatusOK, swaggeruiHTML(openAPIPath, "OpenAPI")) })
 }
 
-func swaggerUI(openAPIPath string, title string) string {
+func swaggeruiHTML(openAPIPath string, title string) string {
 	return fmt.Sprintf(`<!doctype html>
 		<html lang="en">
 		<head>
@@ -38,8 +38,9 @@ func swaggerUI(openAPIPath string, title string) string {
 			<elements-api
 			apiDescriptionUrl="%s"
 			router="hash"
-			layout="sidebar"
+			layout="responsive"
 			tryItCredentialsPolicy="same-origin"
+			hideSchemas="true"
 			/>
 
 		</body>
