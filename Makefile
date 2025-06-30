@@ -7,6 +7,7 @@ GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
 BINARY_NAME=echotonic
 MAIN_PATH=.
+GO_PATH=$(shell go env GOPATH)
 
 # Show help
 .PHONY: help
@@ -14,7 +15,6 @@ help:
 	@echo "Available commands:"
 	@echo "  run          - Run the application"
 	@echo "  build        - Build the application"
-	@echo "  build-prod   - Build for production"
 	@echo "  test         - Run tests"
 	@echo "  test-coverage- Run tests with coverage"
 	@echo "  clean        - Clean build files"
@@ -22,7 +22,6 @@ help:
 	@echo "  tidy         - Tidy up dependencies"
 	@echo "  update       - Update dependencies"
 	@echo "  fmt          - Format code"
-	@echo "  lint         - Lint code"
 	@echo "  vet          - Vet code"
 	@echo "  dev          - Run with hot reload (requires air)"
 	@echo "  install-tools- Install development tools"
@@ -38,11 +37,6 @@ run:
 .PHONY: build
 build:
 	$(GOBUILD) -o $(BINARY_NAME) -v $(MAIN_PATH)
-
-# Build for production (with optimizations)
-.PHONY: build-prod
-build-prod:
-	CGO_ENABLED=0 GOOS=linux $(GOBUILD) -a -installsuffix cgo -ldflags '-extldflags "-static"' -o $(BINARY_NAME) $(MAIN_PATH)
 
 # Test the application
 .PHONY: test
@@ -84,11 +78,6 @@ update:
 fmt:
 	$(GOCMD) fmt ./...
 
-# Lint code (requires golangci-lint to be installed)
-.PHONY: lint
-lint:
-	golangci-lint run
-
 # Vet code
 .PHONY: vet
 vet:
@@ -97,13 +86,11 @@ vet:
 # Run development server with hot reload (requires air to be installed)
 .PHONY: dev
 dev:
-	air
+	${GO_PATH}/bin/air -c .air.toml
 
-# Install development tools
 .PHONY: install-tools
 install-tools:
 	$(GOGET) github.com/air-verse/air@latest
-	$(GOGET) github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 # Docker build (if you want to add Docker support)
 .PHONY: docker-build

@@ -26,6 +26,7 @@ func (m *MockUserService) GetByID(id string, name string) (*userService.User, er
 	}
 	return args.Get(0).(*userService.User), args.Error(1)
 }
+func (m *MockUserService) Create(user *userService.User) (*userService.User, error) { return nil, nil }
 
 type UserControllerTestSuite struct {
 	suite.Suite

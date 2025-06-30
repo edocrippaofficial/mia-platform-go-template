@@ -26,4 +26,10 @@ func (c *UserController) RegisterRoutes(r *router.Router) {
 		c.GetByIDHandler,
 		docs.OperationObject{OperationId: "get-user-by-id", Tags: tags, Summary: "Get user by ID"},
 	)
+
+	router.RegisterRoute[CreateRequest, CreateResponse](r,
+		"POST", "/users",
+		c.CreateHandler,
+		docs.OperationObject{OperationId: "create-user", Tags: tags, Summary: "Create a new user"},
+	)
 }

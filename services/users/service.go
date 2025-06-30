@@ -12,6 +12,7 @@ type User struct {
 
 type UserService interface {
 	GetByID(id string, name string) (*User, error)
+	Create(user *User) (*User, error)
 }
 
 type userService struct {
@@ -39,4 +40,14 @@ func (s *userService) GetByID(id string, name string) (*User, error) {
 	}
 
 	return user, nil
+}
+
+func (s *userService) Create(user *User) (*User, error) {
+	user.ID = "4"
+	createdUser, err := s.repo.Create(user)
+	if err != nil {
+		return nil, err
+	}
+
+	return createdUser, nil
 }

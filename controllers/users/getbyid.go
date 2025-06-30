@@ -13,9 +13,9 @@ type GetByIDRequest struct {
 }
 
 type GetByIDResponse struct {
-	ID    string `json:"id" validate:"required"`
-	Name  string `json:"name" validate:"required"`
-	Email string `json:"email" validate:"required,email"`
+	ID    string `json:"id,omitempty"`
+	Name  string `json:"name,omitempty"`
+	Email string `json:"email,omitempty"`
 }
 
 func (ctrl *UserController) GetByIDHandler(c echo.Context) error {
