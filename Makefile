@@ -13,20 +13,17 @@ GO_PATH=$(shell go env GOPATH)
 .PHONY: help
 help:
 	@echo "Available commands:"
-	@echo "  run          - Run the application"
-	@echo "  build        - Build the application"
-	@echo "  test         - Run tests"
-	@echo "  test-coverage- Run tests with coverage"
-	@echo "  clean        - Clean build files"
-	@echo "  deps         - Download dependencies"
-	@echo "  tidy         - Tidy up dependencies"
-	@echo "  update       - Update dependencies"
-	@echo "  fmt          - Format code"
-	@echo "  vet          - Vet code"
-	@echo "  dev          - Run with hot reload (requires air)"
-	@echo "  install-tools- Install development tools"
-	@echo "  docker-build - Build Docker image"
-	@echo "  help         - Show this help"
+	@echo "  run           - Run the application"
+	@echo "  build         - Build the application"
+	@echo "  test          - Run tests"
+	@echo "  test-coverage - Run tests with coverage"
+	@echo "  clean         - Clean build files"
+	@echo "  deps          - Download dependencies"
+	@echo "  tidy          - Tidy up dependencies"
+	@echo "  update        - Update dependencies"
+	@echo "  dev           - Run with hot reload (requires air)"
+	@echo "  install-tools - Install development tools"
+	@echo "  help          - Show this help"
 
 # Run the application
 .PHONY: run
@@ -73,16 +70,6 @@ update:
 	$(GOGET) -u ./...
 	$(GOMOD) tidy
 
-# Format code
-.PHONY: fmt
-fmt:
-	$(GOCMD) fmt ./...
-
-# Vet code
-.PHONY: vet
-vet:
-	$(GOCMD) vet ./...
-
 # Run development server with hot reload (requires air to be installed)
 .PHONY: dev
 dev:
@@ -92,9 +79,10 @@ dev:
 install-tools:
 	$(GOGET) github.com/air-verse/air@latest
 
-# Docker build (if you want to add Docker support)
-.PHONY: docker-build
-docker-build:
-	docker build -t $(BINARY_NAME) .
-
-
+.PHONY: version
+version:
+	sed -i.bck "s|SERVICE_VERSION=\"[0-9]*.[0-9]*.[0-9]*.*\"|SERVICE_VERSION=\"${VERSION}\"|" "Dockerfile"
+	rm -fr "Dockerfile.bck"
+	git add "Dockerfile"
+	git commit -m "bump v${VERSION}"
+	git tag v${VERSION}
