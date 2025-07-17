@@ -1,0 +1,74 @@
+{
+  "name": "Go Template",
+  "description": "Microservice in Golang with API Portal",
+  "tenantId": "<change with your tenant id>",
+  "type": "template",
+  "itemId": "go-template",
+  "repositoryUrl": "https://github.com/edocrippaofficial/mia-platform-go-template",
+  "label": "Go Template",
+  "categoryId": "go",
+  "releaseStage": "stable",
+  "documentation": {
+    "type": "markdown",
+    "url": "https://raw.githubusercontent.com/edocrippaofficial/mia-platform-go-template/main/README.md"
+  },
+  "version": {
+    "name": "1.0.0",
+    "releaseNote": "https://raw.githubusercontent.com/edocrippaofficial/mia-platform-go-template/main/CHANGELOG.md"
+  },
+  "resources":{
+    "services": {
+      "go-template": {
+        "name": "go-template",
+        "description": "Microservice in Golang with API Portal",
+        "archiveUrl": "https://github.com/edocrippaofficial/mia-platform-go-template/archive/main.tar.gz",
+        "containerPorts": [
+          {
+            "name": "http",
+            "from": 80,
+            "to": 3000,
+            "protocol": "TCP"
+          }
+        ],
+        "type": "template",
+        "defaultEnvironmentVariables": [
+          {
+            "name": "LOG_LEVEL",
+            "value": "{{LOG_LEVEL}}",
+            "valueType": "plain"
+          }
+        ],
+        "defaultProbes": {
+          "liveness": {
+            "failureThreshold": 3,
+            "initialDelaySeconds": 15,
+            "path": "/-/healthz",
+            "periodSeconds": 20,
+            "port": "http",
+            "successThreshold": 1,
+            "timeoutSeconds": 2
+          },
+          "readiness": {
+            "failureThreshold": 3,
+            "initialDelaySeconds": 15,
+            "path": "/-/ready",
+            "periodSeconds": 10,
+            "port": "http",
+            "successThreshold": 1,
+            "timeoutSeconds": 2
+          }
+        },
+        "defaultResources": {
+          "cpuLimits": {
+            "max": "150m",
+            "min": "50m"
+          },
+          "memoryLimits": {
+            "max": "150Mi",
+            "min": "70Mi"
+          }
+        }
+      }
+    }
+  }
+}
