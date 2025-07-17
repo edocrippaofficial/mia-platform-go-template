@@ -5,6 +5,7 @@ go 1.24.2
 require (
 	github.com/TickLabVN/tonic/adapters/echo v0.0.0-20250628103404-005921cb9127
 	github.com/labstack/echo/v4 v4.13.4
+	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.10.0
 )
 
@@ -33,10 +34,12 @@ require (
 
 require (
 	github.com/TickLabVN/tonic/core v0.0.0-20250628103404-005921cb9127
+	github.com/caarlos0/env/v11 v11.3.1
 	github.com/go-playground/validator/v10 v10.26.0
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/mia-platform/glogger/v4 v4.2.0
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/crypto v0.39.0 // indirect

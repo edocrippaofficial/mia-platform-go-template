@@ -2,25 +2,47 @@ package router
 
 import (
 	"echotonic/middlewares"
+	"echotonic/spec"
 
 	echoSwagger "github.com/TickLabVN/tonic/adapters/echo"
 	"github.com/TickLabVN/tonic/core/docs"
 	"github.com/labstack/echo/v4"
+	"github.com/sirupsen/logrus"
 )
 
 type Router struct {
-	Echo    *echo.Echo
+	Handler *echo.Echo
 	OpenAPI *docs.OpenApi
 }
 
-func NewRouter(e *echo.Echo, openapi *docs.OpenApi) *Router {
-	return &Router{
-		Echo:    e,
+func NewRouter(logger *logrus.Logger) *Router {
+	e := echo.New()
+	e.HideBanner = true
+
+	e.Validator = middlewares.NewValidator()
+	e.Use(middlewares.RequestMiddlewareLogger(logger, []string{"/-/", "/documentation"}))
+
+	openapi := &docs.OpenApi{
+		OpenAPI: "3.0.1",
+		Info: docs.InfoObject{
+			Version: "1.0.0",
+			Title:   "Echo Example API",
+		},
+	}
+
+	router := &Router{
+		Handler: e,
 		OpenAPI: openapi,
 	}
+
+	addHealthRoutes(router)
+
+	spec.ExposeSwaggerUI(e, openapi)
+
+	return router
 }
 
 func RegisterRoute[Req any, Res any](r *Router, method string, path string, handler echo.HandlerFunc, opts ...docs.OperationObject) {
-	route := r.Echo.Add(method, path, handler, middlewares.Bind[Req])
+	route := r.Handler.Add(method, path, handler, middlewares.Bind[Req])
 	echoSwagger.AddRoute[Req, Res](r.OpenAPI, route, opts...)
 }

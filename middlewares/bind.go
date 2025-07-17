@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -10,7 +9,6 @@ import (
 func Bind[Req any](next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		var data Req
-		fmt.Printf("Binding data for type: %T\n", data)
 		if err := c.Bind(&data); err != nil {
 			return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid input", "message": err.Error()})
 		}
