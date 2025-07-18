@@ -5,7 +5,7 @@ GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 GOMOD=$(GOCMD) mod
-BINARY_NAME=echotonic
+BINARY_NAME=mia_template_service_name_placeholder
 MAIN_PATH=.
 GO_PATH=$(shell go env GOPATH)
 
