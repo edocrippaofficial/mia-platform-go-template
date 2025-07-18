@@ -4,7 +4,7 @@ include:
     ref: "master"
 
 default:
-  image: golang:1.23
+  image: golang:1.24.2
 
 variables:
   IMAGE_NAME: mia_template_image_name_placeholder
