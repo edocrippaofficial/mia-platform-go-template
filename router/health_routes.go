@@ -15,6 +15,7 @@ type HealthResponse struct {
 
 var tags = []string{"health"}
 
+// registers the health check routes to the router.
 func addHealthRoutes(r *Router) {
 	RegisterRoute[HealthRequest, HealthResponse](r,
 		"GET", "/-/ready",

@@ -1,4 +1,4 @@
-package spec
+package router
 
 import (
 	"fmt"
@@ -8,7 +8,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func ExposeSwaggerUI(e *echo.Echo, openapi *docs.OpenApi) {
+// sets up the Swagger UI for the OpenAPI documentation.
+func exposeSwaggerUI(e *echo.Echo, openapi *docs.OpenApi) {
 	path := "/documentation"
 	openAPIPath := fmt.Sprintf("%s.json", path)
 

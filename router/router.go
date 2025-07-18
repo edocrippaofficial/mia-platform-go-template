@@ -2,7 +2,6 @@ package router
 
 import (
 	"echotonic/middlewares"
-	"echotonic/spec"
 
 	echoSwagger "github.com/TickLabVN/tonic/adapters/echo"
 	"github.com/TickLabVN/tonic/core/docs"
@@ -37,7 +36,7 @@ func NewRouter(logger *logrus.Logger) *Router {
 
 	addHealthRoutes(router)
 
-	spec.ExposeSwaggerUI(e, openapi)
+	exposeSwaggerUI(e, openapi)
 
 	return router
 }
