@@ -1,7 +1,7 @@
 package router
 
 import (
-	"echotonic/middlewares"
+	"mia_template_service_name_placeholder/middlewares"
 
 	echoSwagger "github.com/TickLabVN/tonic/adapters/echo"
 	"github.com/TickLabVN/tonic/core/docs"

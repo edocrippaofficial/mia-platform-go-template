@@ -1,9 +1,9 @@
 package users
 
 import (
-	"echotonic/router"
-	"echotonic/services"
-	userService "echotonic/services/users"
+	"mia_template_service_name_placeholder/router"
+	"mia_template_service_name_placeholder/services"
+	userService "mia_template_service_name_placeholder/services/users"
 
 	"github.com/TickLabVN/tonic/core/docs"
 )

@@ -1,7 +1,7 @@
 package services
 
 import (
-	userService "echotonic/services/users"
+	userService "mia_template_service_name_placeholder/services/users"
 )
 
 // Services holds all the application dependencies

@@ -1,7 +1,8 @@
 package users
 
 import (
-	"echotonic/services/users"
+	"mia_template_service_name_placeholder/services/users"
+
 	"fmt"
 	"net/http"
 

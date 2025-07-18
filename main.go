@@ -1,10 +1,10 @@
 package main
 
 import (
-	"echotonic/config"
-	"echotonic/controllers"
-	"echotonic/router"
-	"echotonic/services"
+	"mia_template_service_name_placeholder/config"
+	"mia_template_service_name_placeholder/controllers"
+	"mia_template_service_name_placeholder/router"
+	"mia_template_service_name_placeholder/services"
 
 	"context"
 	"fmt"

@@ -1,14 +1,14 @@
 package users
 
 import (
+	"mia_template_service_name_placeholder/middlewares"
+	userService "mia_template_service_name_placeholder/services/users"
+	
 	"bytes"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"echotonic/middlewares"
-	userService "echotonic/services/users"
 
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"

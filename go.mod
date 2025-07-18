@@ -1,4 +1,4 @@
-module echotonic
+module mia_template_service_name_placeholder
 
 go 1.24.2
 

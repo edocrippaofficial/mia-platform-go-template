@@ -1,10 +1,9 @@
 package controllers
 
 import (
-	"echotonic/controllers/users"
-	"echotonic/services"
-
-	"echotonic/router"
+	"mia_template_service_name_placeholder/controllers/users"
+	"mia_template_service_name_placeholder/router"
+	"mia_template_service_name_placeholder/services"
 )
 
 type Controller interface {
